@@ -28,7 +28,7 @@ const RegistrationForm = () => {
                                     },
                                     pattern: {
                                         value: /^[A-Za-záéíóúñ ]+$/,
-                                        message: "Solo se permiten letras"
+                                        message: "El nombre solo puede contener letras"
                                     }
                                 }
                                 )}
@@ -53,7 +53,7 @@ const RegistrationForm = () => {
                                     },
                                     pattern: {
                                         value: /^[1-9][0-9]{8}$/,
-                                        message: "Verifique el formato de la cédula"
+                                        message: "La cédula solo puede contener 9 dígitos"
                                     }
                                 }
                                 )}
@@ -70,12 +70,52 @@ const RegistrationForm = () => {
                     <Form.Row>
                         <Form.Group as={Col}>
                             <Form.Label>Correo electrónico</Form.Label>
-                            <Form.Control placeholder="Escriba su correo" />
+                            <Form.Control
+                                placeholder="Escriba su correo"
+                                {...register(
+                                    "correo", {
+                                        required: {
+                                            value: requerida,
+                                            message: "Campo requerido"
+                                        },
+                                        pattern: {
+                                            value: /utn.ac.cr$/,
+                                            message: 'EL correo debe pertenecer al dominio "utn.ac.cr"'
+                                        },
+                                        validate: {
+                                            // contieneArroba: v => v.includes("@") || 'Formato invalido de correo, no contiene "@"',
+                                            // contieneUsuario: v => v[0] !== "@" || "Por favor ingrese un usuario a la dirección"
+                                        }
+                                    }
+                                )}
+                            />
+                            {
+                                errors.correo &&
+                                <Form.Text className="form-alert">
+                                    {errors.correo.message}
+                                </Form.Text>
+                            }
                         </Form.Group>
 
                         <Form.Group as={Col}>
                             <Form.Label>Teléfono</Form.Label>
-                            <Form.Control placeholder="Escriba su teléfono" />
+                            <Form.Control
+                                placeholder="Escriba su teléfono"
+                                {...register(
+                                    "telefono", {
+                                    pattern: {
+                                        value: /^[1-9][0-9]{7}$/,
+                                        message: "El teléono solo puede contener 8 dígitos"
+                                    }
+                                }
+                                )}
+                            />
+                            {
+                                errors.telefono &&
+                                <Form.Text className="form-alert">
+                                    {errors.telefono.message}
+                                </Form.Text>
+                            }
                         </Form.Group>
                     </Form.Row>
 
