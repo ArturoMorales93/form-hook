@@ -1,0 +1,41 @@
+$enable-responsive-font-sizes: true;
+
+@import "~bootstrap/scss/bootstrap";
+
+#root {
+    min-height: 100vh;
+    background: linear-gradient(10deg, #AB0000, #0549DC);
+    padding-top: 1.5em;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: #fff;
+}
+
+.container {
+    background-color: rgba(245, 245, 245, 0.418);
+    padding: 25px 30px;
+    border-radius: 5px;
+    width: 50%;
+}
+
+.radios-container {
+    display: flex;
+    height: 50%;
+    gap: 1em;
+
+    input {
+        height: 1.15em;
+        width: 1.15em;
+    }
+}
+
+.form-alert {
+    color: hsl(15, 100%, 30%);
+}
+
+.form-alert::before {
+    display: inline;
+    content: "❗ ";
+}
