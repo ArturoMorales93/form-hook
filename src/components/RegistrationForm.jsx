@@ -16,6 +16,13 @@ const RegistrationForm = () => {
         setContrasenia2(document.getElementById("contrasenia2"))
     }, [contrasenia1, contrasenia2])
 
+    const [provincia, setProvincia] = useState(0)
+    const [provinciaInput, setProvinciaInput] = useState({})
+    useEffect(() => {
+        setProvinciaInput(document.getElementById("provincia"))
+        setProvincia(provinciaInput.selectedIndex)
+    }, [provincia, provinciaInput])
+
     const onSubmit = (data, { target }) => {
         console.log(data)
         // target.submit()
@@ -161,9 +168,10 @@ const RegistrationForm = () => {
                                 as="select" id="provincia"
                                 {...register(
                                     "provincia", {
-                                        validate: v => v !== "Elija una opción" || "Debe elegir una opción"
-                                    }
+                                    validate: v => v !== "Elija una opción" || "Debe elegir una opción"
+                                }
                                 )}
+                                onChange={() => setProvincia(provinciaInput.selectedIndex)}
                             >
                                 <option>Elija una opción</option>
                                 <option>San José</option>
@@ -188,12 +196,12 @@ const RegistrationForm = () => {
                                 as="select"
                                 {...register(
                                     "canton", {
-                                        validate: v => v !== "Elija una opción" || "Debe elegir una opción"
-                                    }
+                                    validate: v => v !== "Elija una opción" || "Debe elegir una opción"
+                                }
                                 )}
                             >
                                 <option>Elija una opción</option>
-                                {<Cantones idProvincia={1} />}
+                                {<Cantones idProvincia={provincia} />}
                             </Form.Control>
                             {
                                 errors.canton &&
@@ -225,7 +233,7 @@ const RegistrationForm = () => {
                                     <div>
                                         <Form.Label>Cantidad</Form.Label>
                                         <Form.Control
-                                            type="number" placeholder="Escriba la cantidad" // Debe validarse que se reinicie en el unmount
+                                            type="number" placeholder="Escriba la cantidad"
                                             {...register(
                                                 "cantidad", {
                                                 min: {
@@ -233,6 +241,9 @@ const RegistrationForm = () => {
                                                     message: "La cantidad mínima es 1"
                                                 },
                                                 valueAsNumber: {
+                                                    value: true
+                                                },
+                                                shouldUnregister: {
                                                     value: true
                                                 }
                                             }
