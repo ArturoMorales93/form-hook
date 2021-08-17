@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react"
 import { Container, Form, Col, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import Cantones from "./Cantones";
 // import useDateValidator from "./CustomHooks/useDateValidator";
 
 const RegistrationForm = () => {
 
     const requerido = false
     const [tieneHijos, setTieneHijos] = useState(false)
-    const [contrasenia1, setContrasenia1] = useState("")
-    const [contrasenia2, setContrasenia2] = useState("")
+    const [contrasenia1, setContrasenia1] = useState({})
+    const [contrasenia2, setContrasenia2] = useState({})
     const { register, handleSubmit, formState: { errors } } = useForm();
     useEffect(() => {
         setContrasenia1(document.getElementById("contrasenia1"))
@@ -156,18 +157,50 @@ const RegistrationForm = () => {
                     <Form.Row>
                         <Form.Group as={Col}>
                             <Form.Label>Provincia</Form.Label>
-                            <Form.Control as="select">
+                            <Form.Control
+                                as="select" id="provincia"
+                                {...register(
+                                    "provincia", {
+                                        validate: v => v !== "Elija una opción" || "Debe elegir una opción"
+                                    }
+                                )}
+                            >
                                 <option>Elija una opción</option>
-                                <option>...</option>
+                                <option>San José</option>
+                                <option>Alajuela</option>
+                                <option>Cartago</option>
+                                <option>Heredia</option>
+                                <option>Guanacaste</option>
+                                <option>Puntarenas</option>
+                                <option>Limón</option>
                             </Form.Control>
+                            {
+                                errors.provincia &&
+                                <Form.Text className="form-alert">
+                                    {errors.provincia.message}
+                                </Form.Text>
+                            }
                         </Form.Group>
 
                         <Form.Group as={Col}>
                             <Form.Label>Cantón</Form.Label>
-                            <Form.Control as="select">
+                            <Form.Control
+                                as="select"
+                                {...register(
+                                    "canton", {
+                                        validate: v => v !== "Elija una opción" || "Debe elegir una opción"
+                                    }
+                                )}
+                            >
                                 <option>Elija una opción</option>
-                                <option>...</option>
+                                {<Cantones idProvincia={1} />}
                             </Form.Control>
+                            {
+                                errors.canton &&
+                                <Form.Text className="form-alert">
+                                    {errors.canton.message}
+                                </Form.Text>
+                            }
                         </Form.Group>
                     </Form.Row>
 
@@ -245,8 +278,8 @@ const RegistrationForm = () => {
                                 type="text" placeholder="Escriba su contraseña" id="contrasenia2"
                                 {...register(
                                     "contrasenia2", {
-                                        validate: v => v === contrasenia1.value || "Contraseñas deben ser iguales" // Esto debe estar en un archivo a parte
-                                    }
+                                    validate: v => v === contrasenia1.value || "Contraseñas deben ser iguales" // Esto debe estar en un archivo a parte
+                                }
                                 )}
                             />
                             {
