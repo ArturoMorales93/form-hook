@@ -2,12 +2,13 @@ import React, { useState, useEffect, createRef } from "react"
 import { Container, Form, Col, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import Cantones from "../Cantones";
+import InputCedula from "../inputComponents/InputCedula";
 import InputNombre from "../inputComponents/InputNombre";
 // import useDateValidator from "./CustomHooks/useDateValidator";
 const contrasenia1 = createRef()
 
 const RegistrationForm = () => {
-    const requerido = false
+    const requerido = true
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [tieneHijos, setTieneHijos] = useState(false)
@@ -29,31 +30,7 @@ const RegistrationForm = () => {
             <Form action="/codigo" method="GET" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Row>
                     <InputNombre register={register} errors={errors} requerido={requerido} />
-
-                    <Form.Group as={Col}>
-                        <Form.Label>Cédula</Form.Label>
-                        <Form.Control
-                            placeholder="Escriba su cédula"
-                            {...register(
-                                "cedula", {
-                                required: {
-                                    value: requerido,
-                                    message: "Campo requerido"
-                                },
-                                pattern: {
-                                    value: /^[1-9][0-9]{8}$/,
-                                    message: "La cédula solo puede contener 9 dígitos"
-                                }
-                            }
-                            )}
-                        />
-                        {
-                            errors.cedula &&
-                            <Form.Text className="form-alert">
-                                {errors.cedula.message}
-                            </Form.Text>
-                        }
-                    </Form.Group>
+                    <InputCedula register={register} errors={errors} requerido={requerido} />
                 </Form.Row>
 
                 <Form.Row>
