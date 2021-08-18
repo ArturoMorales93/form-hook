@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react"
+import React, { useState, useEffect, createRef } from "react"
 import { Container, Form, Col, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import Cantones from "./Cantones";
 // import useDateValidator from "./CustomHooks/useDateValidator";
+const contrasenia1 = createRef()
 
 const RegistrationForm = () => {
-
     const requerido = false
-    const [tieneHijos, setTieneHijos] = useState(false)
-    const [contrasenia1, setContrasenia1] = useState({})
-    const [contrasenia2, setContrasenia2] = useState({})
+    
     const { register, handleSubmit, formState: { errors } } = useForm();
-    useEffect(() => {
-        setContrasenia1(document.getElementById("contrasenia1"))
-        setContrasenia2(document.getElementById("contrasenia2"))
-    }, [contrasenia1, contrasenia2])
-
+    const [tieneHijos, setTieneHijos] = useState(false)
     const [provincia, setProvincia] = useState(0)
     const [provinciaInput, setProvinciaInput] = useState({})
     useEffect(() => {
@@ -168,7 +162,7 @@ const RegistrationForm = () => {
                                 as="select" id="provincia"
                                 {...register(
                                     "provincia", {
-                                    validate: v => v !== "Elija una opción" || "Debe elegir una opción"
+                                    // validate: v => v !== "Elija una opción" || "Debe elegir una opción"
                                 }
                                 )}
                                 onChange={() => setProvincia(provinciaInput.selectedIndex)}
@@ -196,7 +190,7 @@ const RegistrationForm = () => {
                                 as="select"
                                 {...register(
                                     "canton", {
-                                    validate: v => v !== "Elija una opción" || "Debe elegir una opción"
+                                    // validate: v => v !== "Elija una opción" || "Debe elegir una opción"
                                 }
                                 )}
                             >
@@ -265,7 +259,7 @@ const RegistrationForm = () => {
                         <Form.Group as={Col}>
                             <Form.Label>Contraseña</Form.Label>
                             <Form.Control
-                                type="text" placeholder="Escriba su contraseña" id="contrasenia1"
+                                type="text" placeholder="Escriba su contraseña" name="contrasenia1"
                                 {...register(
                                     "contrasenia1", {
                                     // pattern: {
@@ -274,6 +268,7 @@ const RegistrationForm = () => {
                                     // }
                                 }
                                 )}
+                                ref={contrasenia1}
                             />
                             {
                                 errors.contrasenia1 &&
@@ -286,10 +281,10 @@ const RegistrationForm = () => {
                         <Form.Group as={Col}>
                             <Form.Label>Confirme su contraseña</Form.Label>
                             <Form.Control
-                                type="text" placeholder="Escriba su contraseña" id="contrasenia2"
+                                type="text" placeholder="Escriba su contraseña"
                                 {...register(
                                     "contrasenia2", {
-                                    validate: v => v === contrasenia1.value || "Contraseñas deben ser iguales" // Esto debe estar en un archivo a parte
+                                    validate: v => v === contrasenia1.current.value || "Contraseñas deben ser iguales" // Esto debe estar en un archivo a parte
                                 }
                                 )}
                             />
