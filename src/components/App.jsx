@@ -1,7 +1,7 @@
 import '../styles/styles.scss'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import RegistrationForm from './RegistrationForm';
-import Codigo from './Codigo';
+import RegistrationForm from './pages/RegistrationForm';
+import Codigo from './pages/Codigo';
 
 const App = () => (
   <Router>
