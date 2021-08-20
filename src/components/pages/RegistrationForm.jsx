@@ -1,24 +1,27 @@
-import React, { useState, useEffect, createRef } from "react"
+import React, { useState, useRef, createRef } from "react"
 import { Container, Form, Col, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import FormInput from "../inputComponents/FormInput.jsx";
+// import useDateValidator from "../CustomHooks/useDateValidator";
 import Cantones from "../Cantones";
-import InputCedula from "../inputComponents/InputCedula";
-import InputNombre from "../inputComponents/InputNombre";
-// import useDateValidator from "./CustomHooks/useDateValidator";
+import FormSelect from "../inputComponents/FormSelect.jsx";
+import { useEffect } from "react";
+
 const contrasenia1 = createRef()
+const provincia = createRef()
 
 const RegistrationForm = () => {
-    const requerido = true
+    const requerido = false
+    // const provincia = useRef(null)
 
+    // Incorporación de React Hook Form
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [tieneHijos, setTieneHijos] = useState(false)
-    const [provincia, setProvincia] = useState(0)
-    const [provinciaInput, setProvinciaInput] = useState({})
-    useEffect(() => {
-        setProvinciaInput(document.getElementById("provincia"))
-        setProvincia(provinciaInput.selectedIndex)
-    }, [provincia, provinciaInput])
 
+    // Estados
+    const [tieneHijos, setTieneHijos] = useState(false)
+    const [provinciaSeleccionada, setProvinciaSeleccionada] = useState(0)
+
+    //Submit del formulario
     const onSubmit = (data, { target }) => {
         console.log(data)
         // target.submit()
@@ -26,118 +29,102 @@ const RegistrationForm = () => {
 
     return (
         <Container>
-            <h2>Datos personales</h2>
+            <h2 className="font-weight-bold">Datos personales</h2>
             <Form action="/codigo" method="GET" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Row>
-                    <InputNombre register={register} errors={errors} requerido={requerido} />
-                    <InputCedula register={register} errors={errors} requerido={requerido} />
+                    <FormInput
+                        label="Nombre completo" name="nombre" placehorder="Escriba su nombre"
+                        register={register} errors={errors}
+                        validations={{
+                            required: {
+                                value: requerido,
+                                message: "Campo requerido",
+                            },
+                            pattern: {
+                                value: /^[A-Za-záéíóúñ ]+$/,
+                                message: "El nombre solo puede contener letras"
+                            }
+                        }}
+                    />
+
+                    <FormInput
+                        label="Cédula" name="cedula" placehorder="Escriba su cédula"
+                        register={register} errors={errors}
+                        validations={{
+                            required: {
+                                value: requerido,
+                                message: "Campo requerido"
+                            },
+                            pattern: {
+                                value: /^[1-9][0-9]{8}$/,
+                                message: "La cédula solo puede tener 9 dígitos y no puede iniciar con 0."
+                            }
+                        }}
+                    />
                 </Form.Row>
 
                 <Form.Row>
-                    <Form.Group as={Col}>
-                        <Form.Label>Correo electrónico</Form.Label>
-                        <Form.Control
-                            placeholder="Escriba su correo"
-                            {...register(
-                                "correo", {
-                                required: {
-                                    value: requerido,
-                                    message: "Campo requerido"
-                                },
-                                pattern: {
-                                    value: /utn.ac.cr$/,
-                                    message: 'EL correo debe pertenecer al dominio "utn.ac.cr"'
-                                },
-                                validate: {
-                                    // contieneArroba: v => v.includes("@") || 'Formato invalido de correo, no contiene "@"',
-                                    // contieneUsuario: v => v[0] !== "@" || "Por favor ingrese un usuario a la dirección"
-                                }
+                    <FormInput
+                        label="Correo electrónico" name="correo" placehorder="Escriba su correo"
+                        register={register} errors={errors}
+                        validations={{
+                            required: {
+                                value: requerido,
+                                message: "Campo requerido"
+                            },
+                            pattern: {
+                                value: /utn.ac.cr$/,
+                                message: 'EL correo debe pertenecer al dominio "utn.ac.cr"'
+                            },
+                            validate: {
+                                // contieneArroba: v => v.includes("@") || 'Formato invalido de correo, no contiene "@"',
+                                // contieneUsuario: v => v[0] !== "@" || "Por favor ingrese un usuario a la dirección"
                             }
-                            )}
-                        />
-                        {
-                            errors.correo &&
-                            <Form.Text className="form-alert">
-                                {errors.correo.message}
-                            </Form.Text>
-                        }
-                    </Form.Group>
+                        }}
+                    />
 
-                    <Form.Group as={Col}>
-                        <Form.Label>Teléfono</Form.Label>
-                        <Form.Control
-                            placeholder="Escriba su teléfono"
-                            {...register(
-                                "telefono", {
-                                pattern: {
-                                    value: /^[1-9][0-9]{7}$/,
-                                    message: "El teléono solo puede contener 8 dígitos"
-                                }
+                    <FormInput
+                        label="Teléfono" name="telefono" placehorder="Escriba su teléfono"
+                        register={register} errors={errors}
+                        validations={{
+                            pattern: {
+                                value: /^[1-9][0-9]{7}$/,
+                                message: "El teléono solo puede tener 8 dígitos y no puede iniciar con 0."
                             }
-                            )}
-                        />
-                        {
-                            errors.telefono &&
-                            <Form.Text className="form-alert">
-                                {errors.telefono.message}
-                            </Form.Text>
-                        }
-                    </Form.Group>
+                        }}
+                    />
                 </Form.Row>
 
                 <Form.Row>
-                    <Form.Group md={6} as={Col}>
-                        <Form.Label>Fecha de nacimiento</Form.Label>
-                        <Form.Control
-                            type="date"
-                            {...register(
-                                "fecha", {
-                                required: {
-                                    value: requerido,
-                                    message: "Campo requerido"
-                                },
-                                // validate: useDateValidator,
-                            }
-                            )}
-                        />
-                        {
-                            errors.fecha &&
-                            <Form.Text className="form-alert">
-                                {errors.fecha.message}
-                            </Form.Text>
-                        }
-                    </Form.Group>
+                    <FormInput
+                        md={6} label="Fecha de nacimiento" name="fecha" type="date"
+                        register={register} errors={errors}
+                        validations={{
+                            required: {
+                                value: requerido,
+                                message: "Campo requerido"
+                            },
+                            // validate: useDateValidator,
+                        }}
+                    />
                 </Form.Row>
-
+                
                 <Form.Row>
-                    <Form.Group as={Col}>
-                        <Form.Label>Provincia</Form.Label>
-                        <Form.Control
-                            as="select" id="provincia"
-                            {...register(
-                                "provincia", {
-                                // validate: v => v !== "Elija una opción" || "Debe elegir una opción"
-                            }
-                            )}
-                            onChange={() => setProvincia(provinciaInput.selectedIndex)}
-                        >
-                            <option>Elija una opción</option>
-                            <option>San José</option>
-                            <option>Alajuela</option>
-                            <option>Cartago</option>
-                            <option>Heredia</option>
-                            <option>Guanacaste</option>
-                            <option>Puntarenas</option>
-                            <option>Limón</option>
-                        </Form.Control>
-                        {
-                            errors.provincia &&
-                            <Form.Text className="form-alert">
-                                {errors.provincia.message}
-                            </Form.Text>
-                        }
-                    </Form.Group>
-
+                    <FormSelect
+                        label="Provincia" name="provincia" ref={provincia}
+                        register={register} errors={errors} errorMessage="Debe elegir una opción"
+                        defaultOption="Elija una opción"
+                        options={[
+                            "San José",
+                            "Alajuela",
+                            "Cartago",
+                            "Heredia",
+                            "Guanacaste",
+                            "Puntarenas",
+                            "Limón"
+                        ]}
+                        onChange={() => console.log(provincia)}
+                    />
                     <Form.Group as={Col}>
                         <Form.Label>Cantón</Form.Label>
                         <Form.Control
