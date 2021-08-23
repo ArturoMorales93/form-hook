@@ -1,30 +1,54 @@
 import React from "react"
 import { Form, Col } from "react-bootstrap"
 
-const FormSelect = React.forwardRef(({ md, label, name, register, defaultOption, options, errors, errorMessage, onChange }, ref) => (
-    <Form.Group md={md} as={Col}>
-        <Form.Label>{label}</Form.Label>
-        <Form.Control
-            as="select" ref={ref}
-            {...register(
-                name, {
-                // validate: v => v !== defaultOption || errorMessage
-            }
-            )}
-            onChange={onChange}
-            >
-            <option>{defaultOption}</option>
-            {
-                options.map(opt => <option key={opt}>{opt}</option>)
-            }
-        </Form.Control>
+const FormSelect = ({ md, label, name, myRef, register, errors, clearErrors, setError, defaultOption, options, errorMessage, onChange=() => null }) => {
+    const { ref, ...rest } = register(
+        name,
         {
-            errors.provincia &&
-            <Form.Text className="form-alert">
-                {errors.provincia.message}
-            </Form.Text>
+            required: {
+                value: true,
+                message: "Campo requerido",
+            },
+            validate: v => v !== defaultOption || errorMessage
         }
-    </Form.Group>
-))
+    )
+
+    return (
+        <Form.Group md={md} as={Col}>
+            <Form.Label>{label}</Form.Label>
+            <Form.Control
+                as="select"
+                {...rest}
+                name={name}
+                ref={e => {
+                    ref(e)
+                    myRef.current = e
+                }}
+                onChange={() => {
+                    if (myRef.current.selectedIndex !== 0) {
+                        clearErrors(name)
+                    } else {
+                        setError(name, {
+                            type: "manual",
+                            message: errorMessage
+                        })
+                    }
+                    onChange()
+                }}
+            >
+                <option>{defaultOption}</option>
+                {
+                    options.map(opt => <option key={opt}>{opt}</option>)
+                }
+            </Form.Control>
+            {
+                errors[name] &&
+                <Form.Text className="form-alert">
+                    {errors[name].message}
+                </Form.Text>
+            }
+        </Form.Group>
+    )
+}
 
 export default FormSelect

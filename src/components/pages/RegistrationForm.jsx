@@ -2,20 +2,20 @@ import React, { useState, useRef, createRef } from "react"
 import { Container, Form, Col, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import FormInput from "../inputComponents/FormInput.jsx";
-// import useDateValidator from "../CustomHooks/useDateValidator";
-import Cantones from "../Cantones";
 import FormSelect from "../inputComponents/FormSelect.jsx";
-import { useEffect } from "react";
+import useCantones from "../CustomHooks/useCantones";
+// import useDateValidator from "../CustomHooks/useDateValidator";
 
 const contrasenia1 = createRef()
-const provincia = createRef()
+// const provincia = createRef()
 
 const RegistrationForm = () => {
     const requerido = false
-    // const provincia = useRef(null)
+    const cantonRef = useRef(null)
+    const provinciaRef = useRef(null)
 
     // Incorporación de React Hook Form
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setError, clearErrors } = useForm();
 
     // Estados
     const [tieneHijos, setTieneHijos] = useState(false)
@@ -108,12 +108,12 @@ const RegistrationForm = () => {
                         }}
                     />
                 </Form.Row>
-                
+
                 <Form.Row>
                     <FormSelect
-                        label="Provincia" name="provincia" ref={provincia}
-                        register={register} errors={errors} errorMessage="Debe elegir una opción"
-                        defaultOption="Elija una opción"
+                        label="Provincia" name="provincia" myRef={provinciaRef}
+                        register={register} errors={errors} clearErrors={clearErrors} setError={setError}
+                        defaultOption="Elija una opción" errorMessage="Debe elegir una opción"
                         options={[
                             "San José",
                             "Alajuela",
@@ -123,28 +123,18 @@ const RegistrationForm = () => {
                             "Puntarenas",
                             "Limón"
                         ]}
-                        onChange={() => console.log(provincia)}
+                        onChange={() => {
+                            setProvinciaSeleccionada(provinciaRef.current.selectedIndex)
+                            console.log(cantonRef.current)
+                        }}
                     />
-                    <Form.Group as={Col}>
-                        <Form.Label>Cantón</Form.Label>
-                        <Form.Control
-                            as="select"
-                            {...register(
-                                "canton", {
-                                // validate: v => v !== "Elija una opción" || "Debe elegir una opción"
-                            }
-                            )}
-                        >
-                            <option>Elija una opción</option>
-                            {<Cantones idProvincia={provincia} />}
-                        </Form.Control>
-                        {
-                            errors.canton &&
-                            <Form.Text className="form-alert">
-                                {errors.canton.message}
-                            </Form.Text>
-                        }
-                    </Form.Group>
+
+                    <FormSelect
+                        label="Cantón" name="canton" myRef={cantonRef}
+                        register={register} errors={errors} clearErrors={clearErrors} setError={setError}
+                        defaultOption="Elija una opción" errorMessage="Debe elegir una opción"
+                        options={useCantones(provinciaSeleccionada)}
+                    />
                 </Form.Row>
 
                 <Form.Row>

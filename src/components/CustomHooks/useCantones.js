@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios"
 
-const Cantones = ({ idProvincia }) => {
+const useCantones = (idProvincia) => {
     const [cantsSanjose, setCantsSanjose] = useState({})
     const [cantsAlajuela, setCantsAlajuela] = useState({})
     const [cantsCargago, setCantsCartago] = useState({})
@@ -27,36 +27,24 @@ const Cantones = ({ idProvincia }) => {
             .then(response => setCantsLimon(response.data))
     }, [])
 
-    const mostrarCantones = (listaCantones) => {
-        return (
-            <>
-                {
-                    Object.values(listaCantones).map((canton, key) => {
-                        return (<option key={key + 1}>{canton}</option>)
-                    })
-                }
-            </>
-        )
-    }
-
     switch (idProvincia) {
         case 1:
-            return mostrarCantones(cantsSanjose)
+            return Object.values(cantsSanjose)
         case 2:
-            return mostrarCantones(cantsAlajuela)
+            return Object.values(cantsAlajuela)
         case 3:
-            return mostrarCantones(cantsCargago)
+            return Object.values(cantsCargago)
         case 4:
-            return mostrarCantones(cantsHeredia)
+            return Object.values(cantsHeredia)
         case 5:
-            return mostrarCantones(cantsGuanacaste)
+            return Object.values(cantsGuanacaste)
         case 6:
-            return mostrarCantones(cantsPuntarenas)
+            return Object.values(cantsPuntarenas)
         case 7:
-            return mostrarCantones(cantsLimon)
+            return Object.values(cantsLimon)
         default:
-            return null
+            return []
     }
 }
 
-export default (Cantones)
+export default useCantones
