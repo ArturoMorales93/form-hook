@@ -1,21 +1,21 @@
 import React, { useState, useRef, createRef } from "react"
-import { Container, Form, Col, Button } from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import FormInput from "../inputComponents/FormInput.jsx";
-import FormSelect from "../inputComponents/FormSelect.jsx";
-import useCantones from "../CustomHooks/useCantones";
+import { Container, Form, Col, Button } from "react-bootstrap"
+import { useForm } from "react-hook-form"
+import FormInput from "../inputComponents/FormInput.jsx"
+import FormSelect from "../inputComponents/FormSelect.jsx"
+import FormRadio from "../inputComponents/FormRadio.jsx"
+import useCantones from "../CustomHooks/useCantones"
 // import useDateValidator from "../CustomHooks/useDateValidator";
 
 const contrasenia1 = createRef()
-// const provincia = createRef()
 
 const RegistrationForm = () => {
     const requerido = false
-    const cantonRef = useRef(null)
+
     const provinciaRef = useRef(null)
 
     // Incorporación de React Hook Form
-    const { register, handleSubmit, formState: { errors }, setError, clearErrors } = useForm();
+    const { register, control, handleSubmit, formState: { errors }, setError, clearErrors } = useForm();
 
     // Estados
     const [tieneHijos, setTieneHijos] = useState(false)
@@ -104,7 +104,7 @@ const RegistrationForm = () => {
                                 value: requerido,
                                 message: "Campo requerido"
                             },
-                            // validate: useDateValidator,
+                            // validate: useDateValidator
                         }}
                     />
                 </Form.Row>
@@ -125,32 +125,22 @@ const RegistrationForm = () => {
                         ]}
                         onChange={() => {
                             setProvinciaSeleccionada(provinciaRef.current.selectedIndex)
-                            console.log(cantonRef.current)
                         }}
                     />
 
                     <FormSelect
-                        label="Cantón" name="canton" myRef={cantonRef}
-                        register={register} errors={errors} clearErrors={clearErrors} setError={setError}
+                        label="Cantón" name="canton"
+                        register={register} errors={errors}
                         defaultOption="Elija una opción" errorMessage="Debe elegir una opción"
                         options={useCantones(provinciaSeleccionada)}
                     />
                 </Form.Row>
 
                 <Form.Row>
-                    <Form.Group as={Col}>
-                        <Form.Label>Hijos</Form.Label> <br />
-                        <div className="radios-container">
-                            <Form.Check inline id="chkSi" type="radio" label="Si" value="Si"
-                                {...register("hijos")}
-                                onChange={() => setTieneHijos(true)}
-                            />
-                            <Form.Check inline id="chkNo" type="radio" label="No" value="No"
-                                {...register("hijos")}
-                                onChange={() => setTieneHijos(false)}
-                            />
-                        </div>
-                    </Form.Group>
+                    <FormRadio
+                        label="Hijos" name="hijos" defaultValue="No"
+                        setTieneHijos={setTieneHijos} control={control}
+                    />
 
                     <Form.Group as={Col}>
                         {
@@ -193,6 +183,10 @@ const RegistrationForm = () => {
                             type="text" placeholder="Escriba su contraseña" name="contrasenia1"
                             {...register(
                                 "contrasenia1", {
+                                required: {
+                                    value: requerido,
+                                    message: "Campo requerido"
+                                },
                                 // pattern: {
                                 //     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                                 //     message: "La contraseña debe contener mayúsculas, minúsculas, números, símbolos y tener una longitud de 8 caracteres"
