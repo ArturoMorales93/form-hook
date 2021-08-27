@@ -18,8 +18,8 @@ const RegistrationForm = () => {
     const { register, control, handleSubmit, formState: { errors }, setError, clearErrors } = useForm();
 
     // Estados
-    const [tieneHijos, setTieneHijos] = useState(false)
-    const [provinciaSeleccionada, setProvinciaSeleccionada] = useState(0)
+    const [hasChildren, setHasChildren] = useState(false)
+    const [selectedProvincia, setSelectedProvincia] = useState(0)
 
     //Submit del formulario
     const onSubmit = (data, { target }) => {
@@ -33,7 +33,7 @@ const RegistrationForm = () => {
             <Form action="/codigo" method="GET" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Row>
                     <FormInput
-                        label="Nombre completo" name="nombre" placehorder="Escriba su nombre"
+                        label="Nombre completo" name="name" placehorder="Escriba su nombre"
                         register={register} errors={errors}
                         validations={{
                             required: {
@@ -48,7 +48,7 @@ const RegistrationForm = () => {
                     />
 
                     <FormInput
-                        label="Cédula" name="cedula" placehorder="Escriba su cédula"
+                        label="Cédula" name="id" placehorder="Escriba su cédula"
                         register={register} errors={errors}
                         validations={{
                             required: {
@@ -65,7 +65,7 @@ const RegistrationForm = () => {
 
                 <Form.Row>
                     <FormInput
-                        label="Correo electrónico" name="correo" placehorder="Escriba su correo"
+                        label="Correo electrónico" name="email" placehorder="Escriba su correo"
                         register={register} errors={errors}
                         validations={{
                             required: {
@@ -84,7 +84,7 @@ const RegistrationForm = () => {
                     />
 
                     <FormInput
-                        label="Teléfono" name="telefono" placehorder="Escriba su teléfono"
+                        label="Teléfono" name="phone" placehorder="Escriba su teléfono"
                         register={register} errors={errors}
                         validations={{
                             pattern: {
@@ -97,7 +97,7 @@ const RegistrationForm = () => {
 
                 <Form.Row>
                     <FormInput
-                        md={6} label="Fecha de nacimiento" name="fecha" type="date"
+                        md={6} label="Fecha de nacimiento" name="birthday" type="date"
                         register={register} errors={errors}
                         validations={{
                             required: {
@@ -124,7 +124,7 @@ const RegistrationForm = () => {
                             "Limón"
                         ]}
                         onChange={() => {
-                            setProvinciaSeleccionada(provinciaRef.current.selectedIndex)
+                            setSelectedProvincia(provinciaRef.current.selectedIndex)
                         }}
                     />
 
@@ -132,19 +132,19 @@ const RegistrationForm = () => {
                         label="Cantón" name="canton"
                         register={register} errors={errors}
                         defaultOption="Elija una opción" errorMessage="Debe elegir una opción"
-                        options={useCantones(provinciaSeleccionada)}
+                        options={useCantones(selectedProvincia)}
                     />
                 </Form.Row>
 
                 <Form.Row>
                     <FormRadio
-                        label="Hijos" name="hijos" defaultValue="No"
-                        setTieneHijos={setTieneHijos} control={control}
+                        label="Hijos" name="children" defaultValue="No"
+                        setHasChildren={setHasChildren} control={control}
                     />
 
                     <Form.Group as={Col}>
                         {
-                            tieneHijos ?
+                            hasChildren ?
                                 <div>
                                     <Form.Label>Cantidad</Form.Label>
                                     <Form.Control
