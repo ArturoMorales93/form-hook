@@ -28,6 +28,11 @@ h1, h2, h3 {
     input {
         height: 1.15em;
         width: 1.15em;
+        margin-right: 0 !important;
+    }
+
+    label {
+        padding-left: .25em;
     }
 }
 

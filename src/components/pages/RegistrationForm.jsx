@@ -33,7 +33,7 @@ const RegistrationForm = () => {
             <Form action="/codigo" method="GET" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Row>
                     <FormInput
-                        label="Nombre completo" name="name" placehorder="Escriba su nombre"
+                        label="Nombre completo" name="name" placeholder="Escriba su nombre"
                         register={register} errors={errors}
                         validations={{
                             required: {
@@ -48,7 +48,7 @@ const RegistrationForm = () => {
                     />
 
                     <FormInput
-                        label="Cédula" name="id" placehorder="Escriba su cédula"
+                        label="Cédula" name="id" placeholder="Escriba su cédula"
                         register={register} errors={errors}
                         validations={{
                             required: {
@@ -65,7 +65,7 @@ const RegistrationForm = () => {
 
                 <Form.Row>
                     <FormInput
-                        label="Correo electrónico" name="email" placehorder="Escriba su correo"
+                        label="Correo electrónico" name="email" placeholder="Escriba su correo"
                         register={register} errors={errors}
                         validations={{
                             required: {
@@ -84,7 +84,7 @@ const RegistrationForm = () => {
                     />
 
                     <FormInput
-                        label="Teléfono" name="phone" placehorder="Escriba su teléfono"
+                        label="Teléfono" name="phone" placeholder="Escriba su teléfono"
                         register={register} errors={errors}
                         validations={{
                             pattern: {
@@ -142,38 +142,25 @@ const RegistrationForm = () => {
                         setHasChildren={setHasChildren} control={control}
                     />
 
-                    <Form.Group as={Col}>
-                        {
-                            hasChildren ?
-                                <div>
-                                    <Form.Label>Cantidad</Form.Label>
-                                    <Form.Control
-                                        type="number" placeholder="Escriba la cantidad"
-                                        {...register(
-                                            "cantidad", {
-                                            min: {
-                                                value: 1,
-                                                message: "La cantidad mínima es 1"
-                                            },
-                                            valueAsNumber: {
-                                                value: true
-                                            },
-                                            shouldUnregister: {
-                                                value: true
-                                            }
-                                        }
-                                        )}
-                                    />
-                                    {
-                                        errors.cantidad &&
-                                        <Form.Text className="form-alert" >
-                                            {errors.cantidad.message}
-                                        </Form.Text>
-                                    }
-                                </div> :
-                                <div></div>
-                        }
-                    </Form.Group>
+                    {
+                        hasChildren &&
+                        <FormInput
+                            label="Cantidad" name="numChildren" placeholder="Escriba la cantidad"
+                            type="number" register={register} errors={errors}
+                            validations={{
+                                min: {
+                                    value: 1,
+                                    message: "La cantidad mínima es 1"
+                                },
+                                valueAsNumber: {
+                                    value: true
+                                },
+                                shouldUnregister: {
+                                    value: true
+                                }
+                            }}
+                        />
+                    }
                 </Form.Row>
 
                 <Form.Row>
