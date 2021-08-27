@@ -11,17 +11,21 @@ const contrasenia1 = createRef()
 
 const RegistrationForm = () => {
     const requerido = false
+    
+    // React Hook Form
+    const { register, handleSubmit, control, formState: { errors } } = useForm();
 
+
+    // References
     const provinciaRef = useRef(null)
 
-    // Incorporación de React Hook Form
-    const { register, control, handleSubmit, formState: { errors }, setError, clearErrors } = useForm();
 
-    // Estados
+    // States
     const [hasChildren, setHasChildren] = useState(false)
     const [selectedProvincia, setSelectedProvincia] = useState(0)
 
-    //Submit del formulario
+
+    // Form submit
     const onSubmit = (data, { target }) => {
         console.log(data)
         // target.submit()
@@ -72,13 +76,10 @@ const RegistrationForm = () => {
                                 value: requerido,
                                 message: "Campo requerido"
                             },
-                            pattern: {
-                                value: /utn.ac.cr$/,
-                                message: 'EL correo debe pertenecer al dominio "utn.ac.cr"'
-                            },
                             validate: {
-                                // contieneArroba: v => v.includes("@") || 'Formato invalido de correo, no contiene "@"',
-                                // contieneUsuario: v => v[0] !== "@" || "Por favor ingrese un usuario a la dirección"
+                                hasUser: v => v[0] !== "@" || "Por favor ingrese un usuario a la dirección",
+                                // hasAt: v => v.includes("@") || 'Formato invalido de correo, no contiene "@"',
+                                // hasDomain: v => v.slice(-9) === "utn.ac.cr" || 'EL correo debe pertenecer al dominio "utn.ac.cr"'
                             }
                         }}
                     />
@@ -112,8 +113,7 @@ const RegistrationForm = () => {
                 <Form.Row>
                     <FormSelect
                         label="Provincia" name="provincia" myRef={provinciaRef}
-                        register={register} errors={errors} clearErrors={clearErrors} setError={setError}
-                        defaultOption="Elija una opción" errorMessage="Debe elegir una opción"
+                        errors={errors} control={control}
                         options={[
                             "San José",
                             "Alajuela",
@@ -123,15 +123,12 @@ const RegistrationForm = () => {
                             "Puntarenas",
                             "Limón"
                         ]}
-                        onChange={() => {
-                            setSelectedProvincia(provinciaRef.current.selectedIndex)
-                        }}
+                        onChange={() => setSelectedProvincia(provinciaRef.current.selectedIndex)}
                     />
 
                     <FormSelect
                         label="Cantón" name="canton"
-                        register={register} errors={errors}
-                        defaultOption="Elija una opción" errorMessage="Debe elegir una opción"
+                        errors={errors} control={control}
                         options={useCantones(selectedProvincia)}
                     />
                 </Form.Row>
