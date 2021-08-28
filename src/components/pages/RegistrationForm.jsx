@@ -1,4 +1,4 @@
-import React, { useState, useRef, createRef } from "react"
+import React, { useState, useRef } from "react"
 import { Container, Form, Col, Button } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import FormInput from "../inputComponents/FormInput.jsx"
@@ -7,17 +7,17 @@ import FormRadio from "../inputComponents/FormRadio.jsx"
 import useCantones from "../CustomHooks/useCantones"
 // import useDateValidator from "../CustomHooks/useDateValidator";
 
-const contrasenia1 = createRef()
-
 const RegistrationForm = () => {
     const requerido = false
-    
+    const selectDefaultOption = "Elija una opción"
+
     // React Hook Form
-    const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, getValues, control, formState: { errors } } = useForm();
 
 
     // References
     const provinciaRef = useRef(null)
+    const password1Ref = useRef(null)
 
 
     // States
@@ -27,7 +27,13 @@ const RegistrationForm = () => {
 
     // Form submit
     const onSubmit = (data, { target }) => {
+        if (getValues("numChildren") !== undefined) {
+            if (isNaN(getValues("numChildren"))) {
+                data.numChildren = "No especificado"
+            }
+        }
         console.log(data)
+
         // target.submit()
     }
 
@@ -77,7 +83,7 @@ const RegistrationForm = () => {
                                 message: "Campo requerido"
                             },
                             validate: {
-                                hasUser: v => v[0] !== "@" || "Por favor ingrese un usuario a la dirección",
+                                // hasUser: v => v[0] !== "@" || "Por favor ingrese un usuario a la dirección",
                                 // hasAt: v => v.includes("@") || 'Formato invalido de correo, no contiene "@"',
                                 // hasDomain: v => v.slice(-9) === "utn.ac.cr" || 'EL correo debe pertenecer al dominio "utn.ac.cr"'
                             }
@@ -123,13 +129,18 @@ const RegistrationForm = () => {
                             "Puntarenas",
                             "Limón"
                         ]}
-                        onChange={() => setSelectedProvincia(provinciaRef.current.selectedIndex)}
+                        defaultOption={selectDefaultOption}
+                        onChange={() => {
+                            setSelectedProvincia(provinciaRef.current.selectedIndex)
+                            setValue("canton", selectDefaultOption)
+                        }}
                     />
 
                     <FormSelect
                         label="Cantón" name="canton"
                         errors={errors} control={control}
                         options={useCantones(selectedProvincia)}
+                        defaultOption={selectDefaultOption}
                     />
                 </Form.Row>
 
@@ -161,7 +172,24 @@ const RegistrationForm = () => {
                 </Form.Row>
 
                 <Form.Row>
-                    <Form.Group as={Col}>
+                    <FormInput
+                        label="Contraseña" name="password1" placeholder="Escriba su contraseña"
+                        type="text" register={register} errors={errors}
+                        validations={{
+                            required: {
+                                value: requerido,
+                                message: "Campo requerido"
+                            },
+                            // pattern: {
+                            //     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                            //     message: "La contraseña debe contener mayúsculas, minúsculas, números, símbolos y tener una longitud de 8 caracteres"
+                            // }
+                        }}
+                        myRef={password1Ref}
+                    />
+                    {/* {console.log(password1Ref)} */}
+
+                    {/* <Form.Group as={Col}>
                         <Form.Label>Contraseña</Form.Label>
                         <Form.Control
                             type="text" placeholder="Escriba su contraseña" name="contrasenia1"
@@ -185,7 +213,7 @@ const RegistrationForm = () => {
                                 {errors.contrasenia1.message}
                             </Form.Text>
                         }
-                    </Form.Group>
+                    </Form.Group> */}
 
                     <Form.Group as={Col}>
                         <Form.Label>Confirme su contraseña</Form.Label>
@@ -193,7 +221,7 @@ const RegistrationForm = () => {
                             type="text" placeholder="Escriba su contraseña"
                             {...register(
                                 "contrasenia2", {
-                                validate: v => v === contrasenia1.current.value || "Contraseñas deben ser iguales" // Esto debe estar en un archivo a parte
+                                // validate: v => v === contrasenia1.current.value || "Contraseñas deben ser iguales" // Esto debe estar en un archivo a parte
                             }
                             )}
                         />

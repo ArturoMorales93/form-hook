@@ -2,7 +2,7 @@ import React from "react"
 import { Form, Col } from "react-bootstrap"
 import { Controller } from "react-hook-form"
 
-const FormRadio = ({ label, name, defaultValue, setHasChildren, control }) => (
+const FormRadio = ({ label, name, defaultValue="", setHasChildren, control }) => (
     <Controller
         name={name}
         control={control}

@@ -1,9 +1,10 @@
 import { Form, Col } from "react-bootstrap"
 
-const FormInput = ({ md, label, name, register, validations, type, placeholder, errors }) => (
+const FormInput = ({ md, label, name, register, validations, type, placeholder, errors, myRef }) => (
     <Form.Group md={md} as={Col}>
         <Form.Label>{label}</Form.Label>
         <Form.Control
+            ref={myRef}
             {...register(name, validations)}
             type={type}
             placeholder={placeholder}
