@@ -5,14 +5,16 @@ import FormInput from "../inputComponents/FormInput.jsx"
 import FormSelect from "../inputComponents/FormSelect.jsx"
 import FormRadio from "../inputComponents/FormRadio.jsx"
 import useCantones from "../CustomHooks/useCantones"
-// import useDateValidator from "../CustomHooks/useDateValidator";
+// import {checkMinAge, checkMaxAge} from "../CustomHooks/useDateValidator";
 
 const RegistrationForm = () => {
-    const requerido = false
-    const selectDefaultOption = "Elija una opción"
+
+    const IS_REQUIRED = false
+    const SELECT_DEFAULT_OPTION = "Elija una opción"
+
 
     // React Hook Form
-    const { register, handleSubmit, setValue, getValues, control, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, control, formState: { errors } } = useForm();
 
 
     // References
@@ -27,13 +29,8 @@ const RegistrationForm = () => {
 
     // Form submit
     const onSubmit = (data, { target }) => {
-        if (getValues("numChildren") !== undefined) {
-            if (isNaN(getValues("numChildren"))) {
-                data.numChildren = "No especificado"
-            }
-        }
         console.log(data)
-
+        // console.log(password1Ref)
         // target.submit()
     }
 
@@ -44,10 +41,10 @@ const RegistrationForm = () => {
                 <Form.Row>
                     <FormInput
                         label="Nombre completo" name="name" placeholder="Escriba su nombre"
-                        register={register} errors={errors}
+                        register={register} errors={errors} control={control}
                         validations={{
                             required: {
-                                value: requerido,
+                                value: IS_REQUIRED,
                                 message: "Campo requerido",
                             },
                             pattern: {
@@ -59,10 +56,10 @@ const RegistrationForm = () => {
 
                     <FormInput
                         label="Cédula" name="id" placeholder="Escriba su cédula"
-                        register={register} errors={errors}
+                        register={register} errors={errors} control={control}
                         validations={{
                             required: {
-                                value: requerido,
+                                value: IS_REQUIRED,
                                 message: "Campo requerido"
                             },
                             pattern: {
@@ -76,10 +73,10 @@ const RegistrationForm = () => {
                 <Form.Row>
                     <FormInput
                         label="Correo electrónico" name="email" placeholder="Escriba su correo"
-                        register={register} errors={errors}
+                        register={register} errors={errors} control={control}
                         validations={{
                             required: {
-                                value: requerido,
+                                value: IS_REQUIRED,
                                 message: "Campo requerido"
                             },
                             validate: {
@@ -92,7 +89,7 @@ const RegistrationForm = () => {
 
                     <FormInput
                         label="Teléfono" name="phone" placeholder="Escriba su teléfono"
-                        register={register} errors={errors}
+                        register={register} errors={errors} control={control}
                         validations={{
                             pattern: {
                                 value: /^[1-9][0-9]{7}$/,
@@ -105,13 +102,20 @@ const RegistrationForm = () => {
                 <Form.Row>
                     <FormInput
                         md={6} label="Fecha de nacimiento" name="birthday" type="date"
-                        register={register} errors={errors}
+                        register={register} errors={errors} control={control}
                         validations={{
                             required: {
-                                value: requerido,
+                                value: IS_REQUIRED,
                                 message: "Campo requerido"
                             },
-                            // validate: useDateValidator
+                            pattern: {
+                                value: /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/,
+                                message: "Formato de fecha no permitido"
+                            },
+                            validate: {
+                                // hasMinAge: checkMinAge,
+                                // hasMaxYear: checkMaxAge
+                            }
                         }}
                     />
                 </Form.Row>
@@ -129,10 +133,10 @@ const RegistrationForm = () => {
                             "Puntarenas",
                             "Limón"
                         ]}
-                        defaultOption={selectDefaultOption}
+                        defaultOption={SELECT_DEFAULT_OPTION}
                         onChange={() => {
                             setSelectedProvincia(provinciaRef.current.selectedIndex)
-                            setValue("canton", selectDefaultOption)
+                            setValue("canton", SELECT_DEFAULT_OPTION)
                         }}
                     />
 
@@ -140,7 +144,7 @@ const RegistrationForm = () => {
                         label="Cantón" name="canton"
                         errors={errors} control={control}
                         options={useCantones(selectedProvincia)}
-                        defaultOption={selectDefaultOption}
+                        defaultOption={SELECT_DEFAULT_OPTION}
                     />
                 </Form.Row>
 
@@ -154,14 +158,19 @@ const RegistrationForm = () => {
                         hasChildren &&
                         <FormInput
                             label="Cantidad" name="numChildren" placeholder="Escriba la cantidad"
-                            type="number" register={register} errors={errors}
+                            type="number" register={register} errors={errors} control={control}
                             validations={{
                                 min: {
                                     value: 1,
                                     message: "La cantidad mínima es 1"
                                 },
-                                valueAsNumber: {
-                                    value: true
+                                max: {
+                                    value: 99,
+                                    message: "La cantidad máxima es 99"
+                                },
+                                pattern: {
+                                    value: /^[0-9]*$/,
+                                    message: "Dígite solo números"
                                 },
                                 shouldUnregister: {
                                     value: true
@@ -174,10 +183,10 @@ const RegistrationForm = () => {
                 <Form.Row>
                     <FormInput
                         label="Contraseña" name="password1" placeholder="Escriba su contraseña"
-                        type="text" register={register} errors={errors}
+                        type="text" register={register} errors={errors} control={control}
                         validations={{
                             required: {
-                                value: requerido,
+                                value: IS_REQUIRED,
                                 message: "Campo requerido"
                             },
                             // pattern: {
@@ -187,33 +196,6 @@ const RegistrationForm = () => {
                         }}
                         myRef={password1Ref}
                     />
-                    {/* {console.log(password1Ref)} */}
-
-                    {/* <Form.Group as={Col}>
-                        <Form.Label>Contraseña</Form.Label>
-                        <Form.Control
-                            type="text" placeholder="Escriba su contraseña" name="contrasenia1"
-                            {...register(
-                                "contrasenia1", {
-                                required: {
-                                    value: requerido,
-                                    message: "Campo requerido"
-                                },
-                                // pattern: {
-                                //     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                                //     message: "La contraseña debe contener mayúsculas, minúsculas, números, símbolos y tener una longitud de 8 caracteres"
-                                // }
-                            }
-                            )}
-                            ref={contrasenia1}
-                        />
-                        {
-                            errors.contrasenia1 &&
-                            <Form.Text className="form-alert" >
-                                {errors.contrasenia1.message}
-                            </Form.Text>
-                        }
-                    </Form.Group> */}
 
                     <Form.Group as={Col}>
                         <Form.Label>Confirme su contraseña</Form.Label>
