@@ -10,7 +10,7 @@ import { checkMinAge, checkMaxAge } from "../CustomHooks/useDateValidator";
 const RegistrationForm = () => {
 
     // ========== Global variables ========== //
-    const IS_REQUIRED = false
+    const IS_REQUIRED = true
     const SELECT_DEFAULT_OPTION = "Elija una opción"
 
 
