@@ -13,7 +13,7 @@ export const checkMinAge = dob => {
     if (inputDate < validDate) {
         return true
     } else {
-        return `La edad mínima son ${inputDate} años`
+        return `La edad mínima son ${MIN_AGE} años`
     }
 }
 
