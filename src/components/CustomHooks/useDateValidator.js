@@ -3,7 +3,7 @@ const processDates = (dob, constrainDate) => {
     const validDate = new Date()
     validDate.setFullYear(validYear)
     validDate.setHours(0, 0, 0)
-    const inputDate = new Date()
+    const inputDate = new Date(`${dob}T00:00:00`)
     return [inputDate, validDate]
 }
 
