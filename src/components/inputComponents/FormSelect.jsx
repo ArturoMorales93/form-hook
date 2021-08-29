@@ -5,14 +5,13 @@ const FormSelect = ({ md, label, name, options, defaultOption, errors, control, 
     <Controller
         name={name}
         control={control}
-        // rules={{
-        //     required: {
-        //         value: true,
-        //         message: "Campo requerido"
-        //     },
-        //     validate: v => v !== defaultOption || "Debe elegir una opción"
-        // }}
-        defaultValue={defaultOption}
+        rules={{
+            required: {
+                value: true,
+                message: "Campo requerido"
+            },
+            validate: v => v !== defaultOption || "Debe elegir una opción"
+        }}
         render={({ field }) => (
             <Form.Group md={md} as={Col}>
                 <Form.Label>{label}</Form.Label>
@@ -20,7 +19,7 @@ const FormSelect = ({ md, label, name, options, defaultOption, errors, control, 
                     {...field}
                     ref={myRef}
                     as="select"
-                    onChange={(e) => {
+                    onChange={e => {
                         if (onChange !== undefined) {
                             onChange()
                         }
@@ -28,8 +27,8 @@ const FormSelect = ({ md, label, name, options, defaultOption, errors, control, 
                     }}
                 >
                     <option>{defaultOption}</option>
-                    {options.map(opt => (
-                        <option key={opt}>{opt}</option>
+                    {options.map((opt, i) => (
+                        <option key={i}>{opt}</option>
                     ))}
                 </Form.Control>
                 {

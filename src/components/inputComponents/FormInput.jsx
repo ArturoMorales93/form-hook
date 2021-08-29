@@ -1,16 +1,17 @@
 import { Form, Col } from "react-bootstrap"
 import { Controller } from "react-hook-form"
 
-const FormInput = ({ md, label, name, register, validations, type, placeholder, errors, control, myRef }) => (
+const FormInput = ({ md, label, name, validations, type, placeholder, errors, control, myRef }) => (
     <Controller
         name={name}
         control={control}
+        rules={validations}
         render={({ field }) => (
             <Form.Group md={md} as={Col}>
                 <Form.Label>{label}</Form.Label>
                 <Form.Control
+                    {...field}
                     ref={myRef}
-                    {...register(name, validations)}
                     type={type}
                     placeholder={placeholder}
                 />

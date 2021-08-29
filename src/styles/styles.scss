@@ -11,6 +11,7 @@ $enable-responsive-font-sizes: true;
 h1, h2, h3 {
     text-align: center;
     color: #fff;
+    margin-bottom: .5em;
 }
 
 .container {
@@ -43,4 +44,18 @@ h1, h2, h3 {
 .form-alert::before {
     display: inline;
     content: '❗ ';
+}
+
+.button-group {
+    display: flex;
+
+    button {
+        width: 100%;
+    }
+}
+
+.response-grid {
+    display: flex;
+    gap: 5em;
+    justify-content: center;
 }
