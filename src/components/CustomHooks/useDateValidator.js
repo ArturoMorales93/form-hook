@@ -3,7 +3,7 @@ const processDates = (dob, constrainDate) => {
     const validDate = new Date()
     validDate.setFullYear(validYear)
     validDate.setHours(0, 0, 0)
-    const inputDate = new Date(`${dob} 00:00:00`)
+    const inputDate = new Date(`1993-06-26 0:0:0`)
     
     return [inputDate, validDate]
 }
@@ -11,11 +11,10 @@ const processDates = (dob, constrainDate) => {
 export const checkMinAge = dob => {
     const MIN_AGE = 12
     const [inputDate, validDate] = processDates(dob, MIN_AGE)
-    console.log(inputDate)
     if (inputDate < validDate) {
         return true
     } else {
-        return `La edad mínima son ${inputDate} años ${validDate}`
+        return `La edad mínima son ${inputDate} años`
     }
 }
 
