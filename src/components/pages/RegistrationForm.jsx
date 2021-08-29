@@ -56,7 +56,7 @@ const RegistrationForm = () => {
             <Form action="/codigo" method="GET" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Row>
                     <FormInput
-                        label="Nombre completo" name="name" placeholder="Escriba su nombre"
+                        md={6} label="Nombre completo" name="name" placeholder="Escriba su nombre"
                         errors={errors} control={control}
                         validations={{
                             required: {
@@ -71,7 +71,7 @@ const RegistrationForm = () => {
                     />
 
                     <FormInput
-                        label="Cédula" name="id" placeholder="Escriba su cédula"
+                        md={6} label="Cédula" name="id" placeholder="Escriba su cédula"
                         errors={errors} control={control}
                         validations={{
                             required: {
@@ -88,7 +88,7 @@ const RegistrationForm = () => {
 
                 <Form.Row>
                     <FormInput
-                        label="Correo electrónico" name="email" placeholder="Escriba su correo"
+                        md={6} label="Correo electrónico" name="email" placeholder="Escriba su correo"
                         errors={errors} control={control}
                         validations={{
                             required: {
@@ -104,7 +104,7 @@ const RegistrationForm = () => {
                     />
 
                     <FormInput
-                        label="Teléfono" name="phone" placeholder="Escriba su teléfono"
+                        md={6} label="Teléfono" name="phone" placeholder="Escriba su teléfono"
                         errors={errors} control={control}
                         validations={{
                             pattern: {
@@ -138,7 +138,7 @@ const RegistrationForm = () => {
 
                 <Form.Row>
                     <FormSelect
-                        label="Provincia" name="provincia" myRef={provinciaRef}
+                        md={6} label="Provincia" name="provincia" myRef={provinciaRef}
                         errors={errors} control={control}
                         options={[
                             "San José",
@@ -157,7 +157,7 @@ const RegistrationForm = () => {
                     />
 
                     <FormSelect
-                        label="Cantón" name="canton"
+                        md={6} label="Cantón" name="canton"
                         errors={errors} control={control}
                         options={useCantones(selectedProvincia)}
                         defaultOption={SELECT_DEFAULT_OPTION}
@@ -166,14 +166,14 @@ const RegistrationForm = () => {
 
                 <Form.Row>
                     <FormRadio
-                        label="Hijos" name="children"
+                        md={6} label="Hijos" name="children"
                         setHasChildren={setHasChildren} control={control} myRef={[chkSiRef, chkNoRef]}
                     />
 
                     {
                         hasChildren &&
                         <FormInput
-                            label="Cantidad" name="numChildren" placeholder="Escriba la cantidad"
+                            md={6} label="Cantidad" name="numChildren" placeholder="Escriba la cantidad"
                             type="number" errors={errors} control={control}
                             validations={{
                                 min: {
@@ -195,7 +195,7 @@ const RegistrationForm = () => {
 
                 <Form.Row>
                     <FormInput
-                        label="Contraseña" name="password1" placeholder="Escriba su contraseña"
+                        md={6} label="Contraseña" name="password1" placeholder="Escriba su contraseña"
                         type="password" errors={errors} control={control}
                         myRef={password1Ref}
                         validations={{
@@ -211,7 +211,7 @@ const RegistrationForm = () => {
                     />
 
                     <FormInput
-                        label="Confirme su contraseña" name="password2" placeholder="Escriba su contraseña"
+                        md={6} label="Confirme su contraseña" name="password2" placeholder="Escriba su contraseña"
                         type="password" errors={errors} control={control}
                         validations={{
                             required: {

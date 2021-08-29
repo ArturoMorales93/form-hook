@@ -14,11 +14,19 @@ h1, h2, h3 {
     margin-bottom: .5em;
 }
 
+.form-row {
+    margin: 0;
+}
+
 .container {
     background-color: rgba(245, 245, 245, 0.418);
     padding: 25px 30px;
     border-radius: 5px;
-    width: 50%;
+    width: 100%;
+    
+    @include media-breakpoint-up(md) {
+        width: 50%;
+    }
 }
 
 .radios-container {
