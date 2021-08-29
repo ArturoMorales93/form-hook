@@ -89,7 +89,7 @@ const RegistrationForm = () => {
                 <Form.Row>
                     <FormInput
                         md={6} label="Correo electrónico" name="email" placeholder="Escriba su correo"
-                        errors={errors} control={control}
+                        type={"email"} errors={errors} control={control}
                         validations={{
                             required: {
                                 value: IS_REQUIRED,
