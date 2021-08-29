@@ -6,6 +6,10 @@ $enable-responsive-font-sizes: true;
     min-height: 100vh;
     background: linear-gradient(10deg, #AB0000, #0549DC);
     padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 h1, h2, h3 {
@@ -22,7 +26,7 @@ h1, h2, h3 {
     background-color: rgba(245, 245, 245, 0.418);
     padding: 25px 30px;
     border-radius: 5px;
-    width: 100%;
+    width: 90%;
     
     @include media-breakpoint-up(md) {
         width: 50%;
@@ -55,7 +59,11 @@ h1, h2, h3 {
 }
 
 .button-group {
-    display: flex;
+    display: block;
+
+    @include media-breakpoint-up(md) {
+        display: flex;
+    }
 
     button {
         width: 100%;
@@ -63,7 +71,36 @@ h1, h2, h3 {
 }
 
 .response-grid {
-    display: flex;
-    gap: 5em;
-    justify-content: center;
+    display: block;
+
+    @include media-breakpoint-up(md) {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .row {
+        margin-bottom: 1em;
+        flex-wrap: nowrap;
+
+        div:first-child {
+            flex-grow: .5;
+            padding-left: 1.5em;
+
+            @include media-breakpoint-up(md) {
+                flex-grow: 1;
+                padding-left: 5em;
+            }
+        }
+
+        div:last-child {
+            overflow: scroll;
+
+            @include media-breakpoint-up(md) {
+                overflow: visible;
+            }
+        }
+    }
 }
