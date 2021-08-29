@@ -223,7 +223,7 @@ const RegistrationForm = () => {
                     />
                 </Form.Row>
 
-                <ButtonGroup className="button-group">
+                <div className="button-group">
                     <Button variant="dark" type="submit">
                         Enviar
                     </Button>
@@ -236,7 +236,7 @@ const RegistrationForm = () => {
                         }}>
                         Limpiar campos
                     </Button>
-                </ButtonGroup>
+                </div>
             </Form>
         </Container>
     )
