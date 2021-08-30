@@ -18,5 +18,5 @@ Ambas acciones se realizaron por medio de Heroku utilizando el [Heroku Buildpack
 - Mejorar código que consume la API [Ubicaciones de Costa Rica](https://ubicaciones.paginasweb.cr/).
     - Aplicar una validación para la respuesta en caso que cambien la dirección de la API.
     - Mejorar el código para hacerlo más mantenible.
-    - Implementar el estado con API.
-        - Esto para enviar la información del formulario hacía la otra página y no enviarla por la URL.
+- Implementar el estado con API.
+    - Esto para enviar la información del formulario hacía la otra página y no enviarla por la URL.
