@@ -12,7 +12,12 @@ $enable-responsive-font-sizes: true;
     justify-content: center;
 }
 
+.breadcrumb {
+    background-color: rgba(245, 245, 245, 0.418);
+}
+
 h1, h2, h3 {
+    font-weight: bold;
     text-align: center;
     color: #fff;
     margin-bottom: .5em;
@@ -49,11 +54,16 @@ h1, h2, h3 {
     }
 }
 
-.form-alert {
-    color: hsl(15, 100%, 30%);
+.form__help-text {
+    color: hsl(0, 0%, 30%);
 }
 
-.form-alert::before {
+.form__alert-text {
+    color: hsl(15, 100%, 30%);
+    font-weight: bold;
+}
+
+.form__alert-text::before {
     display: inline;
     content: '❗ ';
 }
@@ -65,7 +75,7 @@ h1, h2, h3 {
         display: flex;
     }
 
-    button {
+    a, button {
         width: 100%;
     }
 }

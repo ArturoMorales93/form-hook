@@ -1,4 +1,6 @@
+import Navigator from "../Organisms/Navigator"
 import { Container, Row, Col } from "react-bootstrap"
+import { CODE_PAGE, HOME_PAGE, REGISTRATION_FORM_PAGE } from "../../routes/routes"
 
 const Codigo = () => {
     var url = window.location.href
@@ -19,6 +21,12 @@ const Codigo = () => {
 
     return (
         <Container>
+            <Navigator path={[
+                HOME_PAGE,
+                REGISTRATION_FORM_PAGE,
+                CODE_PAGE
+            ]} />
+
             <h1>Datos personales</h1>
             <div className="response-grid">
                 <Row>

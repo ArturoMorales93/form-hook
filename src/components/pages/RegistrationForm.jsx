@@ -1,11 +1,13 @@
-import React, { useState, useRef } from "react"
-import { Container, Form, Button, ButtonGroup } from "react-bootstrap"
 import { useForm } from "react-hook-form"
+import React, { useState, useRef } from "react"
+import { Container, Form, Button } from "react-bootstrap"
+import Navigator from "../Organisms/Navigator.jsx"
+import useCantones from "../CustomHooks/useCantones"
+import FormRadio from "../inputComponents/FormRadio.jsx"
 import FormInput from "../inputComponents/FormInput.jsx"
 import FormSelect from "../inputComponents/FormSelect.jsx"
-import FormRadio from "../inputComponents/FormRadio.jsx"
-import useCantones from "../CustomHooks/useCantones"
-import { checkMinAge, checkMaxAge } from "../CustomHooks/useDateValidator";
+import { checkMinAge, checkMaxAge } from "../CustomHooks/useDateValidator"
+import { HOME_PAGE, REGISTRATION_FORM_PAGE } from "../../routes/routes.js"
 
 const RegistrationForm = () => {
 
@@ -52,11 +54,20 @@ const RegistrationForm = () => {
 
     return (
         <Container>
-            <h2 className="font-weight-bold">Datos personales</h2>
+            <Navigator path={[
+                HOME_PAGE,
+                REGISTRATION_FORM_PAGE
+            ]} />
+
+            <h2>Datos personales</h2>
             <Form action="/codigo" method="GET" onSubmit={handleSubmit(onSubmit)}>
+                <Form.Text className="form__help-text">
+                    <p>Encontrará un asterisco en los campos requeridos.</p>
+                </Form.Text>
                 <Form.Row>
                     <FormInput
-                        md={6} label="Nombre completo" name="name" placeholder="Escriba su nombre"
+                        md={6} label="Nombre completo" name="name"
+                        placeholder="Escriba su nombre"
                         errors={errors} control={control}
                         validations={{
                             required: {
@@ -71,7 +82,9 @@ const RegistrationForm = () => {
                     />
 
                     <FormInput
-                        md={6} label="Cédula" name="id" placeholder="Escriba su cédula"
+                        md={6} label="Cédula" name="id"
+                        placeholder="Escriba su cédula"
+                        helpText="No ingrese guiones"
                         errors={errors} control={control}
                         validations={{
                             required: {
@@ -88,7 +101,9 @@ const RegistrationForm = () => {
 
                 <Form.Row>
                     <FormInput
-                        md={6} label="Correo electrónico" name="email" placeholder="Escriba su correo"
+                        md={6} label="Correo electrónico" name="email"
+                        placeholder="Escriba su correo"
+                        helpText="Debe pertenecer al dominio utn.ac.cr"
                         type={"email"} errors={errors} control={control}
                         validations={{
                             required: {
@@ -104,7 +119,9 @@ const RegistrationForm = () => {
                     />
 
                     <FormInput
-                        md={6} label="Teléfono" name="phone" placeholder="Escriba su teléfono"
+                        md={6} label="Teléfono" name="phone"
+                        placeholder="Escriba su teléfono"
+                        helpText="No ingrese guiones"
                         errors={errors} control={control}
                         validations={{
                             pattern: {
@@ -117,8 +134,9 @@ const RegistrationForm = () => {
 
                 <Form.Row>
                     <FormInput
-                        md={6} label="Fecha de nacimiento" name="birthday" type="date"
-                        errors={errors} control={control}
+                        md={6} label="Fecha de nacimiento" name="birthday"
+                        helpText="Debe tener mínimo 12 años"
+                        type="date" errors={errors} control={control}
                         validations={{
                             required: {
                                 value: IS_REQUIRED,
@@ -173,7 +191,8 @@ const RegistrationForm = () => {
                     {
                         hasChildren &&
                         <FormInput
-                            md={6} label="Cantidad" name="numChildren" placeholder="Escriba la cantidad"
+                            md={6} label="Cantidad" name="numChildren"
+                            placeholder="Escriba la cantidad"
                             type="number" errors={errors} control={control}
                             validations={{
                                 min: {
@@ -193,6 +212,10 @@ const RegistrationForm = () => {
                     }
                 </Form.Row>
 
+                <Form.Text className="form__help-text">
+                    La contraseña debe contener mayúsculas, minúsculas, números, símbolos (@#$&*) y tener una longitud de al menos 8 caracteres
+                </Form.Text>
+
                 <Form.Row>
                     <FormInput
                         md={6} label="Contraseña" name="password1" placeholder="Escriba su contraseña"
@@ -205,7 +228,7 @@ const RegistrationForm = () => {
                             },
                             pattern: {
                                 value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@#$&*!%?]{8,}$/,
-                                message: "La contraseña debe contener mayúsculas, minúsculas, números, símbolos (@#$&*) y tener una longitud de al menos 8 caracteres"
+                                message: "La contraseña no cumple los requisitos"
                             }
                         }}
                     />

@@ -14,7 +14,7 @@ const FormSelect = ({ md, label, name, options, defaultOption, errors, control, 
         }}
         render={({ field }) => (
             <Form.Group md={md} as={Col}>
-                <Form.Label>{label}</Form.Label>
+                <Form.Label>{label} *</Form.Label>
                 <Form.Control
                     {...field}
                     ref={myRef}
@@ -33,7 +33,7 @@ const FormSelect = ({ md, label, name, options, defaultOption, errors, control, 
                 </Form.Control>
                 {
                     errors[name] &&
-                    <Form.Text className="form-alert font-weight-bold">
+                    <Form.Text className="form__alert-text">
                         {errors[name].message}
                     </Form.Text>
                 }
