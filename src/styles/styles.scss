@@ -81,11 +81,10 @@ h1, h2, h3 {
 }
 
 .response-grid {
-    display: block;
+    display: flex;
+    flex-direction: column;
 
     @include media-breakpoint-up(md) {
-        display: flex;
-        flex-direction: column;
         width: 75%;
         margin-left: auto;
         margin-right: auto;
@@ -97,7 +96,6 @@ h1, h2, h3 {
 
         div:first-child {
             flex-grow: .5;
-            padding-left: 1.5em;
 
             @include media-breakpoint-up(md) {
                 flex-grow: 1;

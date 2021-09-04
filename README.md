@@ -4,9 +4,10 @@ Este proyecto fue diseñado para poner en práctica conocimientos de la libreria
 
 ## Acerca de
 
-El proyecto surgió para satisfacer los requerimientos de un proyecto final de un curso universitario.
+El proyecto surgió para satisfacer los requerimientos de un examen final de un curso universitario.
 
 Para la creación de la aplicación se utilizó React por medio de [Create React App](https://es.reactjs.org/docs/create-a-new-react-app.html#create-react-app).
+A su vez, se implementó [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) para manejar la arquitectura de los componentes.
 
 ## Build & deploy
 
@@ -14,7 +15,6 @@ Ambas acciones se realizaron por medio de Heroku utilizando el [Heroku Buildpack
 
 ## Pendientes
 
-- Agregar los requerimientos a la aplicación.
 - Mejorar código que consume la API [Ubicaciones de Costa Rica](https://ubicaciones.paginasweb.cr/).
     - Aplicar una validación para la respuesta en caso que cambien la dirección de la API.
     - Mejorar el código para hacerlo más mantenible.
