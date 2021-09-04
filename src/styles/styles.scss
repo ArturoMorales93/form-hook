@@ -38,6 +38,20 @@ h1, h2, h3 {
     }
 }
 
+.requirements {
+    --list-padding: 1em;
+
+    @include media-breakpoint-down(sm) {
+        padding-left: var(--list-padding);
+    }
+
+    ol {
+        @include media-breakpoint-down(sm) {
+            padding-left: var(--list-padding);
+        }
+    }
+}
+
 .radios-container {
     display: flex;
     height: 50%;
