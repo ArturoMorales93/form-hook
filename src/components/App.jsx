@@ -1,10 +1,10 @@
 import '../styles/styles.scss'
-import Home from './Pages/Home'
+// import Home from './Pages/Home'
 import Codigo from './Pages/Codigo'
 import Formulario from './Pages/Formulario'
 import Requerimientos from './Pages/Requerimientos'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { HOME_PAGE, REQUERIMIENTOS_PAGE, FORMULARIO_PAGE, CODIGO_PAGE } from '../routes/routes'
+import { REQUERIMIENTOS_PAGE, FORMULARIO_PAGE, CODIGO_PAGE } from '../routes/routes'
 
 const App = () => (
   <Router>
