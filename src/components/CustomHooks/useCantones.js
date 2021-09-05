@@ -10,21 +10,20 @@ const useCantones = (idProvincia) => {
     const [cantsPuntarenas, setCantsPuntarenas] = useState({})
     const [cantsLimon, setCantsLimon] = useState({})
 
+    const getData = (url, cantsSetter) => {
+        axios.get(url)
+        .then(response => cantsSetter(response.data))
+        .catch(() => cantsSetter(["Error con API de cantones"]))
+    }
+
     useEffect(() => {
-        axios.get("https://ubicaciones.paginasweb.cr/provincia/1/cantones.json")
-            .then(response => setCantsSanjose(response.data))
-        axios.get("https://ubicaciones.paginasweb.cr/provincia/2/cantones.json")
-            .then(response => setCantsAlajuela(response.data))
-        axios.get("https://ubicaciones.paginasweb.cr/provincia/3/cantones.json")
-            .then(response => setCantsCartago(response.data))
-        axios.get("https://ubicaciones.paginasweb.cr/provincia/4/cantones.json")
-            .then(response => setCantsHeredia(response.data))
-        axios.get("https://ubicaciones.paginasweb.cr/provincia/5/cantones.json")
-            .then(response => setCantsGuanacaste(response.data))
-        axios.get("https://ubicaciones.paginasweb.cr/provincia/6/cantones.json")
-            .then(response => setCantsPuntarenas(response.data))
-        axios.get("https://ubicaciones.paginasweb.cr/provincia/7/cantones.json")
-            .then(response => setCantsLimon(response.data))
+        getData("https://ubicaciones.paginasweb.cr/provincia/1/cantones.json", setCantsSanjose)
+        getData("https://ubicaciones.paginasweb.cr/provincia/2/cantones.json", setCantsAlajuela)
+        getData("https://ubicaciones.paginasweb.cr/provincia/3/cantones.json", setCantsCartago)
+        getData("https://ubicaciones.paginasweb.cr/provincia/4/cantones.json", setCantsHeredia)
+        getData("https://ubicaciones.paginasweb.cr/provincia/5/cantones.json", setCantsGuanacaste)
+        getData("https://ubicaciones.paginasweb.cr/provincia/6/cantones.json", setCantsPuntarenas)
+        getData("https://ubicaciones.paginasweb.cr/provincia/7/cantones.json", setCantsLimon)
     }, [])
 
     switch (idProvincia) {
