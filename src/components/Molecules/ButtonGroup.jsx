@@ -1,6 +1,6 @@
-const ButtonGroup = ({components}) => (
+const ButtonGroup = ({children}) => (
     <div className="button-group">
-        {components}
+        {children}
     </div>
 )
 

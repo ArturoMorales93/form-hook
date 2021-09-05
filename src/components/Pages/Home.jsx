@@ -18,18 +18,14 @@ const Home = () => (
                         Por favor dirijase al formulario para ingresar sus datos personales.
                     </p>
 
-                    <ButtonGroup
-                        components={
-                            <>
-                                <Link to={FORMULARIO_PAGE.url} className="btn btn-dark">
-                                    Ir al formulario
-                                </Link>
-                                <Link to={REQUERIMIENTOS_PAGE.url} className="btn btn-outline-dark">
-                                    Ver requerimientos
-                                </Link>
-                            </>
-                        }
-                    />
+                    <ButtonGroup>
+                        <Link to={FORMULARIO_PAGE.url} className="btn btn-dark">
+                            Ir al formulario
+                        </Link>
+                        <Link to={REQUERIMIENTOS_PAGE.url} className="btn btn-outline-dark">
+                            Ver requerimientos
+                        </Link>
+                    </ButtonGroup>
                 </>
             }
         />

@@ -1,4 +1,4 @@
-import { Row, Col, Table } from "react-bootstrap"
+import { Table } from "react-bootstrap"
 
 const UserInformationGrid = () => {
     var url = window.location.href
