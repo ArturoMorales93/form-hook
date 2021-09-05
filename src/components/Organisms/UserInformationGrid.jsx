@@ -1,10 +1,10 @@
-import { Row, Col } from "react-bootstrap"
+import { Row, Col, Table } from "react-bootstrap"
 
 const UserInformationGrid = () => {
     var url = window.location.href
     var params = (new URL(url)).searchParams
 
-    const person = {
+    const user = {
         name: params.get("name"),
         id: params.get("id"),
         email: params.get("email"),
@@ -18,48 +18,50 @@ const UserInformationGrid = () => {
     }
 
     return (
-        <div className="response-grid">
-            <Row>
-                <Col>Nombre</Col>
-                <Col>{person.name}</Col>
-            </Row>
-            <Row>
-                <Col>Cédula</Col>
-                <Col>{person.id}</Col>
-            </Row>
-            <Row>
-                <Col>Correo</Col>
-                <Col>{person.email}</Col>
-            </Row>
-            <Row>
-                <Col>Teléfono</Col>
-                <Col>{person.phone}</Col>
-            </Row>
-            <Row>
-                <Col>Fecha nac.</Col>
-                <Col>{person.birthday}</Col>
-            </Row>
-            <Row>
-                <Col>Provincia</Col>
-                <Col>{person.provincia}</Col>
-            </Row>
-            <Row>
-                <Col>Cantón</Col>
-                <Col>{person.canton}</Col>
-            </Row>
-            <Row>
-                <Col>Hijos</Col>
-                <Col>{person.children}</Col>
-            </Row>
-            <Row>
-                <Col>Cantidad</Col>
-                <Col>{person.numChildren}</Col>
-            </Row>
-            <Row>
-                <Col>Contraseña</Col>
-                <Col>{person.password}</Col>
-            </Row>
-        </div>
+        <Table borderless responsive size="sm">
+            <tbody>
+                <tr>
+                    <td>Nombre</td>
+                    <td>{user.name}</td>
+                </tr>
+                <tr>
+                    <td>Cédula</td>
+                    <td>{user.id}</td>
+                </tr>
+                <tr>
+                    <td>Correo</td>
+                    <td>{user.email}</td>
+                </tr>
+                <tr>
+                    <td>Teléfono</td>
+                    <td>{user.phone}</td>
+                </tr>
+                <tr>
+                    <td>Edad</td>
+                    <td>{user.birthday}</td>
+                </tr>
+                <tr>
+                    <td>Provincia</td>
+                    <td>{user.provincia}</td>
+                </tr>
+                <tr>
+                    <td>Cantón</td>
+                    <td>{user.canton}</td>
+                </tr>
+                <tr>
+                    <td>Hijos</td>
+                    <td>{user.children}</td>
+                </tr>
+                <tr>
+                    <td>Cantidad</td>
+                    <td>{user.numChildren}</td>
+                </tr>
+                <tr>
+                    <td>Contraseña</td>
+                    <td>{user.password}</td>
+                </tr>
+            </tbody>
+        </Table>
     )
 }
 

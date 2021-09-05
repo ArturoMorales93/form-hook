@@ -94,35 +94,11 @@ h1, h2, h3 {
     }
 }
 
-.response-grid {
-    display: flex;
-    flex-direction: column;
+.table {
+    margin-left: auto;
+    margin-right: auto;
 
     @include media-breakpoint-up(md) {
-        width: 75%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .row {
-        margin-bottom: 1em;
-        flex-wrap: nowrap;
-
-        div:first-child {
-            flex-grow: .5;
-
-            @include media-breakpoint-up(md) {
-                flex-grow: 1;
-                padding-left: 5em;
-            }
-        }
-
-        div:last-child {
-            overflow: scroll;
-
-            @include media-breakpoint-up(md) {
-                overflow: visible;
-            }
-        }
+        width: 60%;
     }
 }
