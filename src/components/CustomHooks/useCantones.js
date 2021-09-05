@@ -12,8 +12,8 @@ const useCantones = (idProvincia) => {
 
     const getData = (url, cantsSetter) => {
         axios.get(url)
-        .then(response => cantsSetter(response.data))
-        .catch(() => cantsSetter(["Error con API de cantones"]))
+            .then(response => cantsSetter(response.data))
+            .catch(() => cantsSetter(["Error con API de cantones"]))
     }
 
     useEffect(() => {
