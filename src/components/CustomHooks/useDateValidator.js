@@ -20,10 +20,23 @@ export const checkMinAge = dob => {
 export const checkMaxAge = dob => {
     const MAX_AGE = 125
     const [inputDate, validDate] = processDates(dob, MAX_AGE)
-    
+
     if (inputDate > validDate) {
         return true
     } else {
         return `La edad no puede exceder los ${MAX_AGE} años`
+    }
+}
+
+export const calculateAge = dob => {
+    const birthday = new Date(`${dob}T00:00:00`)
+    const validationDate = new Date()
+    let diff = validationDate.getFullYear() - birthday.getFullYear()
+    validationDate.setFullYear(validationDate.getFullYear() - diff)
+
+    if (birthday > validationDate) {
+        return diff -= 1
+    } else {
+        return diff
     }
 }

@@ -4,17 +4,18 @@ import { Form, Button } from "react-bootstrap"
 import UserContext from "../Context/UserContext"
 import ButtonGroup from "../Molecules/ButtonGroup"
 import useCantones from "../CustomHooks/useCantones"
+import { SET_USER_INFORMATION } from "../Context/actions"
 import React, { useState, useRef, useContext } from "react"
 import FormRadio from "../Molecules/inputComponents/FormRadio.jsx"
 import FormInput from "../Molecules/inputComponents/FormInput.jsx"
 import FormSelect from "../Molecules/inputComponents/FormSelect.jsx"
-import { checkMinAge, checkMaxAge } from "../CustomHooks/useDateValidator"
-import { SET_USER_INFORMATION } from "../Context/actions"
+import { checkMinAge, checkMaxAge, calculateAge } from "../CustomHooks/useDateValidator"
 
 const RegistrationForm = () => {
     // ========== Global variables ========== //
-    const IS_REQUIRED = false
+    const IS_REQUIRED = true
     const SELECT_DEFAULT_OPTION = "Elija una opción"
+    const CHILDREN_DEFAULT_OPTION = "No especificó"
 
 
     // ========== React Hook Form ========== //
@@ -27,7 +28,7 @@ const RegistrationForm = () => {
             birthday: "",
             provincia: SELECT_DEFAULT_OPTION,
             canton: SELECT_DEFAULT_OPTION,
-            children: "No especificó",
+            children: CHILDREN_DEFAULT_OPTION,
             numChildren: "",
             password1: "",
             password2: ""
@@ -42,17 +43,25 @@ const RegistrationForm = () => {
     const password1Ref = useRef(null)
 
 
-    // ========== States ========== //
+    // ========== Global states ========== //
+    const [, dispatch] = useContext(UserContext)
+
+
+    // ========== Local states ========== //
     const [selectedProvincia, setSelectedProvincia] = useState(0)
     const [hasChildren, setHasChildren] = useState(false)
     const [redirect, setRedirect] = useState(false)
 
 
-    const [, dispatch] = useContext(UserContext)
     // ========== Form submit ========== //
     const onSubmit = data => {
+
+        if (data.birthday !== "") {
+            data.age = calculateAge(data.birthday)
+        }
+
         if (data.children === "Si" & data.numChildren === "") {
-            data.numChildren = "No especificó"
+            data.numChildren = CHILDREN_DEFAULT_OPTION
         }
 
         dispatch({
@@ -113,9 +122,9 @@ const RegistrationForm = () => {
                                 message: "Campo requerido"
                             },
                             validate: {
-                                // hasUser: v => v[0] !== "@" || "Por favor ingrese un usuario a la dirección",
-                                // hasAt: v => v.includes("@") || 'Formato invalido de correo, no contiene "@"',
-                                // hasDomain: v => v.slice(-9) === "utn.ac.cr" || 'EL correo debe pertenecer al dominio "utn.ac.cr"'
+                                hasUser: v => v[0] !== "@" || "Por favor ingrese un usuario a la dirección",
+                                hasAt: v => v.includes("@") || 'Formato invalido de correo, no contiene "@"',
+                                hasDomain: v => v.slice(-9) === "utn.ac.cr" || 'EL correo debe pertenecer al dominio "utn.ac.cr"'
                             }
                         }}
                     />
@@ -149,8 +158,8 @@ const RegistrationForm = () => {
                                 message: "Formato de fecha no permitido"
                             },
                             validate: {
-                                // hasMinAge: checkMinAge,
-                                // hasMaxYear: checkMaxAge
+                                hasMinAge: checkMinAge,
+                                hasMaxYear: checkMaxAge
                             }
                         }}
                     />

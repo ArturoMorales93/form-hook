@@ -43,7 +43,7 @@ const UserInformationGrid = () => {
                 </tr>
                 <tr>
                     <td>Edad</td>
-                    <td>{state.birthday}</td>
+                    <td>{state.age}</td>
                 </tr>
                 <tr>
                     <td>Provincia</td>
@@ -63,7 +63,7 @@ const UserInformationGrid = () => {
                 </tr>
                 <tr>
                     <td>Contraseña</td>
-                    <td>{state.password}</td>
+                    <td>{state.password1}</td>
                 </tr>
             </tbody>
         </Table>
