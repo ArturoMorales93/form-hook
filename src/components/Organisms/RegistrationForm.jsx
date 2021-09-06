@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { Redirect } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
 import UserContext from "../Context/UserContext"
 import ButtonGroup from "../Molecules/ButtonGroup"
@@ -13,7 +13,7 @@ import { checkMinAge, checkMaxAge, calculateAge } from "../CustomHooks/useDateVa
 
 const RegistrationForm = () => {
     // ========== Global variables ========== //
-    const IS_REQUIRED = true
+    const IS_REQUIRED = false
     const SELECT_DEFAULT_OPTION = "Elija una opción"
     const CHILDREN_DEFAULT_OPTION = "No especificó"
 
@@ -36,11 +36,12 @@ const RegistrationForm = () => {
     })
 
 
-    // ========== References ========== //
+    // ========== References/Hooks ========== //
     const chkSiRef = useRef(null)
     const chkNoRef = useRef(null)
     const provinciaRef = useRef(null)
     const password1Ref = useRef(null)
+    const history = useHistory()
 
 
     // ========== Global states ========== //
@@ -50,12 +51,10 @@ const RegistrationForm = () => {
     // ========== Local states ========== //
     const [selectedProvincia, setSelectedProvincia] = useState(0)
     const [hasChildren, setHasChildren] = useState(false)
-    const [redirect, setRedirect] = useState(false)
 
 
     // ========== Form submit ========== //
     const onSubmit = data => {
-
         if (data.birthday !== "") {
             data.age = calculateAge(data.birthday)
         }
@@ -68,7 +67,7 @@ const RegistrationForm = () => {
             type: SET_USER_INFORMATION,
             data
         })
-        setRedirect(true)
+        history.push("/codigo")
     }
 
     return (
@@ -272,10 +271,6 @@ const RegistrationForm = () => {
                     </Button>
                 </ButtonGroup>
             </Form>
-            {
-                redirect &&
-                <Redirect push to="/codigo" />
-            }
         </>
     )
 }
