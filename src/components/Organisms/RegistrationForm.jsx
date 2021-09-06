@@ -13,7 +13,7 @@ import { checkMinAge, checkMaxAge, calculateAge } from "../CustomHooks/useDateVa
 
 const RegistrationForm = () => {
     // ========== Global variables ========== //
-    const IS_REQUIRED = false
+    const IS_REQUIRED = true
     const SELECT_DEFAULT_OPTION = "Elija una opción"
     const CHILDREN_DEFAULT_OPTION = "No especificó"
 
