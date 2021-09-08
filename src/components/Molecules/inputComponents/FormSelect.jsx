@@ -13,7 +13,7 @@ const FormSelect = ({ md, label, name, options, defaultOption, errors, control, 
             validate: v => v !== defaultOption || "Debe elegir una opción"
         }}
         render={({ field }) => (
-            <Form.Group md={md} as={Col}>
+            <Form.Group controlId={name} md={md} as={Col}>
                 <Form.Label>{label} *</Form.Label>
                 <Form.Control
                     {...field}
